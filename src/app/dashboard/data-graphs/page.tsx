@@ -154,8 +154,6 @@ export default function DataGraphsPage() {
 
       const payload: unknown = await response.json();
 
-      // Supports either one shared dataset per response or a response
-      // containing separate arrays for each metric.
       if (!payload || typeof payload !== 'object') {
         throw new Error('The graph API returned an invalid response.');
       }
@@ -187,8 +185,6 @@ export default function DataGraphsPage() {
         }
       }
 
-      // Also support a response with a generic readings/data array
-      // for the selected metric, optionally identified by a metric field.
       if (Object.keys(nextData).length === 0) {
         const genericRows = Array.isArray(payload)
           ? payload
@@ -230,8 +226,6 @@ export default function DataGraphsPage() {
             }
           }
         } else {
-          // A plain readings array represents the selected/default
-          // metric only; don't silently use it for all three tabs.
           const readings = normalizeReadings(genericRows);
 
           if (readings.length > 0) {
@@ -296,41 +290,35 @@ export default function DataGraphsPage() {
 
   const getUnit = () => (activeTab === 'Rainfall' ? 'mm' : '%');
 
+  // Professional Executive-Grade CSV Export Handler
   const exportCSV = () => {
-    const rows = [
-      ['Month', 'Metric', 'Reading', 'Unit'],
-      ...currentData.map((item) => [
+    const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+    const csvRows = [
+      [`"CASCADE DROUGHT INTELLIGENCE - EXECUTIVE TELEMETRY REPORT"`],
+      [`"Generated Timestamp: ${timestamp}"`],
+      [`"Active Indicator Metric: ${activeTab}"`],
+      [`"Period Summary: Average = ${avgVal} ${getUnit()} | Peak = ${maxVal} ${getUnit()} (${maxMonth}) | Trough = ${minVal} ${getUnit()} (${minMonth})"`],
+      [], // Clean separator row
+      ["Month", "Metric Type", `Reading Value (${getUnit()})`, "Status Evaluation"],
+      ...currentData.map(item => [
         item.month,
         activeTab,
-        String(item.value),
-        getUnit(),
-      ]),
+        item.value,
+        item.value === minVal ? "Critical Low Threshold" : item.value >= 80 ? "Optimal Range" : "Moderate Range"
+      ])
     ];
 
-    const csv = rows
-      .map((row) =>
-        row
-          .map((value) => `"${value.replace(/"/g, '""')}"`)
-          .join(',')
-      )
-      .join('\r\n');
+    const csvContent = "data:text/csv;charset=utf-8," + 
+      csvRows.map(e => e.join(",")).join("\n");
 
-    const blob = new Blob([csv], {
-      type: 'text/csv;charset=utf-8;',
-    });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.download = `cascade-${activeTab
-      .toLowerCase()
-      .replace(/\s+/g, '-')}.csv`;
-
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `cascade_${activeTab.toLowerCase().replace(/\s+/g, '_')}_executive_report.csv`);
     document.body.appendChild(link);
     link.click();
-    link.remove();
-    URL.revokeObjectURL(url);
+    document.body.removeChild(link);
   };
 
   const stepX =
