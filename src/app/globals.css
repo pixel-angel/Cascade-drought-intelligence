@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+ inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+
+
+
+/* CASCADE cinematic background */
+.drought-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #071d18;
+}
+
+.drought-backdrop__image {
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/cascade-farmland.png");
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.03);
+  animation: farmland-drift 32s ease-in-out infinite alternate;
+}
+
+.drought-backdrop__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.drought-zone {
+  transform-origin: center;
+  animation: drought-pulse 9s ease-in-out infinite alternate;
+}
+
+.flow-line {
+  fill: none;
+  stroke: #70dfb0;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 10 18;
+  opacity: 0.35;
+  animation: water-flow 18s linear infinite;
+}
+
+.flow-line--two {
+  stroke: #63c9dc;
+  opacity: 0.22;
+  animation-duration: 26s;
+}
+
+.drought-backdrop__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4, 24, 19, 0.78) 0%,
+      rgba(4, 24, 19, 0.48) 48%,
+      rgba(4, 24, 19, 0.32) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(4, 24, 19, 0.72),
+      transparent 65%
+    );
+}
+
+@keyframes farmland-drift {
+  from { transform: scale(1.03) translate3d(0, 0, 0); }
+  to { transform: scale(1.10) translate3d(-1%, 0.5%, 0); }
+}
+
+@keyframes drought-pulse {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
+@keyframes water-flow {
+  to { stroke-dashoffset: -280; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drought-backdrop *,
+  .drought-backdrop__image {
+    animation: none !important;
+  }
+}
+
+
+
+/* Reusable CASCADE glass panels */
+.cascade-panel {
+  background: rgba(7, 34, 27, 0.84);
+  border: 1px solid rgba(158, 215, 185, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.cascade-panel h1,
+.cascade-panel h2,
+.cascade-panel h3 {
+  color: #f5fbf7;
+}
+
+.cascade-muted {
+  color: #c0d5ca;
+}
+
+.cascade-button {
+  border: 1px solid rgba(134, 214, 174, 0.4);
+  border-radius: 10px;
+  padding: 10px 16px;
+  background: #145b43;
+  color: white;
+  transition: background 180ms ease;
+}
+
+.cascade-button:hover {
+  background: #1b7455;
+}
+
+.cascade-button:focus-visible {
+  outline: 2px solid #a5e7bf;
+  outline-offset: 3px;
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
+  
+  /* Seamless infinite scrolling ticker */
+  .ticker-scroll {
+    display: flex;
+    width: max-content;
+    animation: ticker 90s linear infinite; 
+  }
+
+  /* Makes SVG dashed lines flow continuously */
+  @keyframes dash-flow {
+    to {
+      stroke-dashoffset: -24;
+    }
+  }
+  .animate-dash-flow {
+    animation: dash-flow 1.2s linear infinite;
+  }
+
+  /* Radar pulse effect for active nodes */
+  @keyframes radar-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+  .animate-radar-pulse {
+    animation: radar-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    transform-origin: center;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+/* Hide scrollbar for mobile navigation */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* CASCADE — slow, subtle water movement */
+
+.cascade-wave {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cascade-water-drift 18s ease-in-out infinite alternate;
+}
+
+.cascade-wave-back {
+  animation-duration: 24s;
+}
+
+.cascade-wave-front {
+  animation-duration: 17s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes cascade-water-drift {
+  from {
+    transform: translateX(-35px) translateY(0);
+  }
+
+  to {
+    transform: translateX(35px) translateY(5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .cascade-wave,
+  .cascade-wave-back,
+  .cascade-wave-front {
+    animation: none !important;
+  }
+}
