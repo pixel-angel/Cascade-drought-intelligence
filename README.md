@@ -37,9 +37,6 @@ By combining environmental indicators, graph-based machine learning, interactive
 
 ### Recommendations
 ![CASCADE Recommendations](docs/screenshots/recommendations.png)
-
-*Add your actual application screenshots using the filenames above. You can also include a landing-page screenshot at `docs/screenshots/landing-page.png`.*
-
 ---
 
 ## 🏗️ System Architecture
@@ -140,17 +137,7 @@ Replace the placeholders with your actual repository URL and directory name.
 npm install
 ```
 
-### 3. Configure Environment Variables
-
-Create a `.env.local` file in the frontend root:
-
-```env
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
-```
-
-Update the URL to match your running backend. For production, use the configured HTTPS API URL.
-
-### 4. Start the Frontend
+### 3. Start the Frontend
 
 ```bash
 npm run dev
@@ -158,7 +145,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 5. Run the Backend
+### 4. Run the Backend
 
 Navigate to your backend directory, activate your Python virtual environment, and install the dependencies listed in its requirements file:
 
