@@ -3,7 +3,7 @@
 ### Connecting watershed data with AI for smarter drought monitoring and climate-resilient decision-making.
 
 <p align="center">
-  <img src="docs/screenshots/cascade-dashboard.png" alt="CASCADE Dashboard Preview" width="100%" />
+  <img src="docs/cascade-dashboard.png" alt="CASCADE Dashboard Preview" width="100%" />
 </p>
 
 **CASCADE** is an AI-powered drought intelligence platform designed to help monitor watershed health, identify vulnerable regions, and support informed water and agricultural resource management.
@@ -27,16 +27,15 @@ By combining environmental indicators, graph-based machine learning, interactive
 ## 📸 Screenshots
 
 ### Dashboard
-![CASCADE Dashboard](docs/screenshots/cascade-dashboard.png)
+![CASCADE Dashboard](docs/dashboard-preview.png)
 
 ### Watershed Visualization and Environmental Graphs
 <p align="center">
-  <img src="docs/screenshots/watershed-map.png" alt="Interactive Watershed Map" width="48%" />
-  <img src="docs/screenshots/drought-graphs.png" alt="Environmental Graphs" width="48%" />
+  <img src="docs/watershed-map.png" alt="Interactive Watershed Map" width="48%" />
 </p>
 
 ### Recommendations
-![CASCADE Recommendations](docs/screenshots/recommendations.png)
+![CASCADE Recommendations](docs/recommendations.png)
 ---
 
 ## 🏗️ System Architecture
